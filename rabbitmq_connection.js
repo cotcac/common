@@ -3,8 +3,8 @@ const {
   logger
 } = require("./logger")
 
-module.exports = async function () {
-  const connection = await amqp.connect(process.env.rabbitmqURL);
+module.exports = async function (name="no name") {
+  const connection = await amqp.connect(process.env.rabbitmqURL,{clientProperties: {connection_name: name}});
   return new Promise((resolve, reject) => {
     connection.on('error', function (err) {
       logger.error(`RabbitMQ Error ${err}`);
